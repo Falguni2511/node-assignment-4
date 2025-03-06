@@ -1,0 +1,81 @@
+body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: black;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: whitesmoke;
+}
+
+#form_id {
+    background: white;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #3364af;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin:auto;
+    
+}
+
+button:hover {
+    background-color: white;
+    color:#3364af;
+}
+
+
+table{
+width: 50%;
+margin: 20px auto;
+border-collapse: collapse;
+background: white;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+th, td {
+border: 1px solid #ddd;
+padding: 10px;
+text-align: left;
+}
+th {
+background-color: #007bff;
+color: white;
+}
+tr:nth-child(even) {
+background-color: #f9f9f9;
+}
+tr:hover {
+background-color: #f1f1f1;
+}
+p {
+color: red;
+font-weight: bold;
+}
+.delete_form{
+    display:inline-block;
+}

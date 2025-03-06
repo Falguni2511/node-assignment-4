@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Edit Users</h1>
+    <form id="form_id" action="/update/<%= user.id %>" method="POST">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" value="<%=user.firstName%>"required>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName"value="<%=user.lastName%>"required><br>
+
+        <button type="submit">Update User</button>
+    </form>
+    
+    
+</body>
+</html>
