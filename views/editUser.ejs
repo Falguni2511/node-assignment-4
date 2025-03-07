@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <%- include('components/navbar') %>
+
     <h1>Edit Users</h1>
     <form id="form_id" action="/update/<%= user.id %>" method="POST">
         <label for="firstName">First Name:</label>
@@ -17,7 +19,7 @@
 
         <button type="submit">Update User</button>
     </form>
-    
+    <p style="color: red;"><%= errorMsg%></p>
     
 </body>
 </html>

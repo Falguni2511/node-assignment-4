@@ -79,3 +79,24 @@ font-weight: bold;
 .delete_form{
     display:inline-block;
 }
+.navbar {
+    
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #555;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.navbar a:hover {
+    background-color: #777;
+}

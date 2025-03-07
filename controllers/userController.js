@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
-
+const {Op}=require('sequelize');
 module.exports.getCreateForm =(req,res)=>{
-    res.render('createUser',{pageTitle:'Create New User', errorMsg:null,successMsg:null})
+    res.render('createUser',{pageTitle:'Create New User', errorMsg:null});
 }
 
 module.exports.addUser=async(req,res)=>{
@@ -9,15 +9,20 @@ module.exports.addUser=async(req,res)=>{
     const userBody=req.body;
     
     if(!userBody.firstName.trim() || !userBody.lastName.trim()){
-        return res.render('createUser',{pageTitle:'Create New User',errorMsg:"Input fields cant be empty!",successMsg:null});
+        return res.render('createUser',{pageTitle:'Create New User',errorMsg:"Input fields cant be empty!"});
     }
     //Check for duplicates
     try{
         
-        const existingUser = await User.findOne({where:{firstName:userBody.firstName,lastName: userBody.lastName}});
+        const existingUser = await User.findOne({ where: {
+            [Op.and]: [
+                { firstName: { [Op.iLike]: userBody.firstName } }, // Case-insensitive match
+                { lastName: { [Op.iLike]: userBody.lastName } }     // Case-insensitive match
+            ]}
+        });
         
         if(existingUser){
-            return res.render('createUser',{pageTitle:'Create New User',errorMsg:"Duplicate users should not exist",successMsg:null});
+            return res.render('createUser',{pageTitle:'Create New User',errorMsg:"Duplicate users should not exist"});
             
         }
         
@@ -25,13 +30,13 @@ module.exports.addUser=async(req,res)=>{
             firstName:userBody.firstName,
             lastName:userBody.lastName
     });
-       return res.render('createUser',{pageTitle:'Create New User',errorMsg:null,successMsg:"User added succesfully"});
+       res.redirect('/users');
             
 
     
     }
     catch(error){
-        res.send("<h1>Error Creating User</h1>")
+        res.status(500).send("<h1>Error Creating User</h1>")
     }
 
 }
@@ -47,22 +52,13 @@ module.exports.getUsers=async(req,res)=>{
 
 module.exports.getUserFromId=async(req,res)=>{
     const user=await User.findOne({where:{id:req.params.id}});
-    res.render('editUser', { user, pageTitle: 'Edit User' });
+    res.render('editUser', { user, pageTitle: 'Edit User' ,errorMsg:null});
 }
 
 module.exports.updateUser=async(req,res)=>{
-     userId = req.params.id;  // Get user ID from URL
+    userId = req.params.id;  // Get user ID from URL
     const userBody = req.body;
 
-    // Input validation: Ensure fields are not empty
-    if (!userBody.firstName.trim() || !userBody.lastName.trim()) {
-        return res.render('editUser', {
-            pageTitle: 'Edit User',
-            errorMsg: "Input fields can't be empty!",
-            successMsg: null,
-            user: { id: userId, firstName: userBody.firstName, lastName: userBody.lastName } // Preserve input
-        });
-    }
 
     try {
         // Find user by ID
@@ -71,8 +67,8 @@ module.exports.updateUser=async(req,res)=>{
         if (!user) {
             return res.render('editUser', {
                 pageTitle: 'Edit User',
-                errorMsg: "User not found!",
-                successMsg: null
+                errorMsg:"User not found!",
+                
             });
         }
 
@@ -87,8 +83,7 @@ module.exports.updateUser=async(req,res)=>{
         if (existingUser) {
             return res.render('editUser', {
                 pageTitle: 'Edit User',
-                errorMsg: "Duplicate users should not exist!",
-                successMsg: null,
+                errorMsg:"Duplicate users should not exist!",
                 user
             });
         }
@@ -98,13 +93,7 @@ module.exports.updateUser=async(req,res)=>{
             firstName: userBody.firstName,
             lastName: userBody.lastName
         });
-
-        return res.render('editUser', {
-            pageTitle: 'Edit User',
-            errorMsg: null,
-            successMsg: "User updated successfully!",
-            user
-        });
+        return res.redirect('/users');
 
     } catch (error) {
         console.error("Error updating user:", error);
@@ -121,3 +110,9 @@ module.exports.deleteUser = async (req, res) => {
         res.send("<h1>Error Deleting User</h1>");
     }
 };
+
+//Using Sequelize’s Magic Methods to retrieve related data dynamically.
+
+
+
+

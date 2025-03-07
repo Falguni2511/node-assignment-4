@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <%- include('components/navbar') %>
     <h1> List of Users</h1>
     <% if(users.length === 0) { %>
         <p><%= errorMsg %></p>
