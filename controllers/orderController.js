@@ -16,8 +16,15 @@ module.exports.createOrder=async(req,res)=>{
                 errorMsg: 'User not found!',
             });
         }
+
         
-        console.log(orderBody.amount);
+        if (isNaN(orderBody.amount) || orderBody.amount <= 0) {
+            return res.render('createOrder', {
+                pageTitle: 'Create Order',
+                errorMsg: 'Amount must be a positive number!',
+            });
+        }
+
         const order =await user.createOrder({ 
             userId:orderBody.userId,             //createOrder() is a magic function provided by sequelize
             productName:orderBody.productName,
@@ -30,4 +37,20 @@ module.exports.createOrder=async(req,res)=>{
         console.log(err);
         res.status(500).send('<h1>Error Creating Order</h1>');
     }
+}
+
+module.exports.getOrders=async(req,res)=>{
+    const userId=req.params.id;
+    try{
+        const user = await User.findByPk(userId);
+        if(!user){
+            res.status(404).send("User not found");
+        }
+        const orders =await user.getOrders();   //Magic function to fetch orders
+        res.render('viewOrders',{pageTitle:"View orders",user,orders});
+    }
+    catch(err){
+        res.status(500).send("Error Fetching Order Details");
+    }
+
 }

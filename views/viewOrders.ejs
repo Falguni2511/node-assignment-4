@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h2 style="color: white;">Orders for <%= user.firstName %><%= user.lastName %></h2>
+
+    <% if (orders.length > 0) { %>
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Amount</th>
+            </tr>
+            <% orders.forEach(order => { %>
+                <tr>
+                    
+                    <td><%= order.productName %></td>
+                    <td><%= order.amount %></td>
+                </tr>
+            <% }) %>
+        </table>
+    <% } else { %>
+        <p>No orders found for this user.</p>
+    <% } %>
+
+    <br>
+<a href="/users"><button type="button">Back to Users</button></a>
+</body>
+</html>

@@ -16,17 +16,21 @@
         <% if(users.length > 0) { %>
         <tr>
             <th>Sr.No</th>
+            <th>User Id</th>
             <th>FirstName</th>
             <th>LastName</th> 
             <th>Action</th>
+            <th>Orders</th>
         </tr>
         <% users.forEach((u,index) => { %>
         <tr>
             <td><%= index+1 %></td>
+            <td><%=u.id%></td>
             <td><%= u.firstName %></td>
             <td><%= u.lastName %></td>
             <td><a href="/edit/<%= u.id %>"><button type="button">Edit</button></a>
             <form action="/delete/<%=u.id%>" method="post" class="delete_form"> <button type="submit">Delete</button></form></td>
+            <td><a href="/order/<%=u.id%>"><button type="button">View Orders</button></a></td>
         </tr>
         <% }) %>
         <% } %>
